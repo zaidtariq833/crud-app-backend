@@ -24,7 +24,10 @@ app.use(helmet());
 app.use(morgan("common"));
 
 app.get("/", (req, res) => {
-  res.send("Server is live and running!");
+  res.json({
+    status: "done",
+    message: "Server is live and running!",
+  });
 });
 
 app.use("/api/user", userRoute);
@@ -32,14 +35,12 @@ app.use("/api/product", productRoute);
 
 const port = process.env.PORT || 5001;
 
-// 2. Wrap the listener in a Sync function
-// This ensures your tables are created in the cloud DB before the app accepts requests
 db.sequelize
   .sync({ force: false, alter: false })
   .then(() => {
     console.log("✅ Database synced");
-    server.listen(port, "0.0.0.0", () => {
-      // Use backticks for a more accurate log in production
+    server.listen(port, () => {
+      console.log(port, "port");
       console.log(`🚀 App is listening at port ${port}`);
     });
   })
