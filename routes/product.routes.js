@@ -3,6 +3,6 @@ const router = express.Router();
 const productController = require("../controllers/product.controller");
 const verifyToken = require("../middleware");
 
-router.get("/get-all-products", verifyToken, productController.getAllProducts);
+router.get("/get-all-products", productController.getAllProducts);
 
 module.exports = router;

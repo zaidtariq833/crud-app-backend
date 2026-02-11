@@ -2,13 +2,32 @@ var db = require("../models");
 const Product = db.Product;
 
 const getAllProducts = async (req, res) => {
+  const arr = {
+    count: 2,
+    data: [
+      {
+        id: 1,
+        title: "abc",
+        description: "abc",
+        price: 10,
+        thumbnail: "https://www.google.com",
+      },
+      {
+        id: 1,
+        title: "abc",
+        description: "abc",
+        price: 10,
+        thumbnail: "https://www.google.com",
+      },
+    ],
+  };
   try {
-    const products = await Product.findAll();
-
+    // const products = await Product.findAll();
+    console.log("resp");
     res.status(200).json({
       success: true,
-      count: products.length,
-      data: products,
+      count: arr.count,
+      data: arr.data,
     });
   } catch (error) {
     res.status(500).json({
@@ -19,32 +38,6 @@ const getAllProducts = async (req, res) => {
   }
 };
 
-const getProductById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const product = await Product.findByPk(id);
-
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      data: product,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error fetching product",
-      error: error.message,
-    });
-  }
-};
-
 module.exports = {
   getAllProducts,
-  getProductById,
 };

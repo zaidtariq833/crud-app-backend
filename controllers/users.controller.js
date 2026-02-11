@@ -43,7 +43,7 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" }, // Token valid for 7 days
+      { expiresIn: "1d" }, 
     );
 
     // 5. Success Response

@@ -4,6 +4,7 @@ const http = require("http");
 const server = http.createServer(app);
 const userRoute = require("./routes/user.routes");
 const productRoute = require("./routes/product.routes");
+// Note: body-parser is now built into express, but keeping it won't hurt.
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -11,22 +12,37 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
+// 1. Import your DB object
+const db = require("./models");
+
+// Middleware
+app.use(cors()); // Added CORS - essential for live apps to be accessed by a frontend
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet());
 app.use(morgan("common"));
-app.use(bodyParser.json());
-require("./models");
 
 app.get("/", (req, res) => {
-  res.send("this is test root url");
+  res.send("Server is live and running!");
 });
 
 app.use("/api/user", userRoute);
 app.use("/api/product", productRoute);
 
 const port = process.env.PORT || 5001;
-server.listen(port, "0.0.0.0", () => {
-  console.log(`app is listening at http://localhost:${port}`);
-});
+
+// 2. Wrap the listener in a Sync function
+// This ensures your tables are created in the cloud DB before the app accepts requests
+db.sequelize
+  .sync({ force: false, alter: false })
+  .then(() => {
+    console.log("✅ Database synced");
+    server.listen(port, "0.0.0.0", () => {
+      // Use backticks for a more accurate log in production
+      console.log(`🚀 App is listening at port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ Failed to sync DB:", err);
+  });
