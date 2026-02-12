@@ -8,7 +8,6 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-require("dotenv").config();
 
 const db = require("./models");
 

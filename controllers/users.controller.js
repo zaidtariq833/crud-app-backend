@@ -2,7 +2,6 @@ var db = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = db.User;
-const dotenv = require("dotenv");
 
 const login = async (req, res) => {
   try {
