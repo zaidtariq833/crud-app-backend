@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
 require("dotenv").config();
 const db = {};
 
@@ -12,11 +11,12 @@ const sequelize = new Sequelize(
   process.env.PASSWORD,
   {
     host: process.env.HOST,
-    dialect: process.env.dialect
-    ,
+    dialect: process.env.DIALECT,
     dialectOptions: {
       ssl: {
+        require: true,
         rejectUnauthorized: true,
+        // ca: fs.readFileSync(process.env.CA)
       },
     },
   },

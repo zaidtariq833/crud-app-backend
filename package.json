@@ -1,20 +1,17 @@
 {
-  "name": "zaid",
+  "name": "zaid-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo",
     "seed": "sequelize db:seed:all",
     "seed:undo": "sequelize db:seed:undo:all"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.2.4",
@@ -23,7 +20,9 @@
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
     "mysql2": "^3.16.3",
-    "nodemon": "^3.1.11",
     "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
