@@ -28,6 +28,6 @@ app.get("/", (req, res) => {
 app.use("/api/user", userRoute);
 app.use("/api/product", productRoute);
 
-// db.sequelize.sync({ force: false });
+db.sequelize.sync({ force: false });
 
 module.exports = app;

@@ -10,32 +10,16 @@ const db = {};
 function getSequelize() {
   if (sequelize) return sequelize;
 
-  sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT) || 4000,
-      dialect: process.env.DB_DIALECT || "mysql",
-      logging: false,
-
-      // 🔑 VERY IMPORTANT for Vercel + TiDB
-      pool: {
-        max: 1,
-        min: 0,
-        acquire: 30000,
-        idle: 10000,
-      },
-
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: true,
-        },
+  sequelize = new Sequelize(process.env.CONNECTION_STRING, {
+    dialect: "mysql",
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: true,
       },
     },
-  );
+  });
 
   return sequelize;
 }
