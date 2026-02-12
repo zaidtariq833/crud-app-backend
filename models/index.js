@@ -1,3 +1,4 @@
+require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
@@ -13,12 +14,6 @@ function getSequelize() {
   sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: "mysql",
     logging: false,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: true,
-      },
-    },
   });
 
   return sequelize;
